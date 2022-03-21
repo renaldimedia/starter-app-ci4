@@ -11,7 +11,7 @@ class AdminFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         $session = session();
-        print_r($session);exit;
+        // print_r($session->);exit;
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)

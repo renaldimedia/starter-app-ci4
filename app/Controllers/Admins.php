@@ -2,10 +2,11 @@
 
 namespace App\Controllers;
 
-class Admins extends BaseController
+class Admins extends BaseAdminController
 {
     public function index()
     {
-        return view('welcome_message');
+        // $data['theme_path'] = $this->baseadminthemepath;
+        return view('admin-module/dashboard', $this->data);
     }
 }

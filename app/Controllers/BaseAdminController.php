@@ -19,8 +19,11 @@ use Psr\Log\LoggerInterface;
  *
  * For security be sure to declare any new methods as protected or private.
  */
-class BaseController extends Controller
+class BaseAdminController extends Controller
 {
+    public $baseadminthemepath;
+    public $settings;
+    public $data;
     /**
      * Instance of the main Request object.
      *
@@ -42,6 +45,7 @@ class BaseController extends Controller
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
+        $this->data['theme_path'] = base_url('xmsth/assets');
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 

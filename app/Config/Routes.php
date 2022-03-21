@@ -34,7 +34,12 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Home::index', ['filter' => 'adminfilter']);
 
 $routes->group('admin', function ($routes) {
-    $routes->get('admins', 'App\Admins::index');
+    $routes->get('admins', 'Admins::index');
+    $routes->group('users', function ($routes) {
+        $routes->get('', 'Users::index');
+        $routes->get('add', 'Users::form');
+        $routes->get('edit', 'Users::form');
+    });
 });
 
 /*
