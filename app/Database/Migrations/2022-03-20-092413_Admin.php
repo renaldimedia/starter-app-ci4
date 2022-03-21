@@ -19,6 +19,11 @@ class Admin extends Migration
                 'constraint' => 45,
                 'null' => true
             ],
+            'password'       => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+                'null' => false
+            ],
             'username'       => [
                 'type'       => 'VARCHAR',
                 'constraint' => 12,
@@ -34,6 +39,12 @@ class Admin extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => 17,
                 'null' => true
+            ],
+            'active'       => [
+                'type'       => 'TINYINT',
+                'constraint' => 1,
+                'null' => false,
+                'default' => 1
             ],
             'default_group'       => [
                 'type'       => 'VARCHAR',
