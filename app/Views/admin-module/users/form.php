@@ -37,10 +37,10 @@
                             <div class="card-body">
                                 <h5 class="card-title"><?= isset($subtitle) ? $subtitle : "Tambah Data User" ?></h5>
                                 <div class="form-row">
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <div class="form-group m-0">
                                             <label for="name" class="col-form-label s-12">NAMA</label>
-                                            <input id="name" placeholder="Enter User Name" class="form-control r-0 light s-12 " type="text">
+                                            <input id="name" placeholder="Enter User Name" class="form-control r-0 light s-12 " type="text" value="<?= isset($data) && $isset($data['name']) ? $data['name'] : ""  ?>">
                                         </div>
 
                                         <!-- <div class="form-row">
@@ -80,20 +80,42 @@
                                 </div>
 
                                 <div class="form-row mt-1">
-                                    <div class="form-group col-4 m-0">
+                                    <div class="form-group col-6 m-0">
                                         <label for="email" class="col-form-label s-12"><i class="icon-envelope-o mr-2"></i>Email</label>
-                                        <input id="email" placeholder="user@email.com" class="form-control r-0 light s-12 " type="text">
+                                        <input id="email" placeholder="user@email.com" class="form-control r-0 light s-12 " type="text" >
                                     </div>
 
                                     <!-- <div class="form-group col-4 m-0">
                                         <label for="phone" class="col-form-label s-12"><i class="icon-phone mr-2"></i>Phone</label>
                                         <input id="phone" placeholder="05112345678" class="form-control r-0 light s-12 " type="text">
                                     </div> -->
-                                    <div class="form-group col-4 m-0">
+                                    <div class="form-group col-6 m-0">
                                         <label for="mobile" class="col-form-label s-12"><i class="icon-mobile-phone mr-2"></i>Mobile</label>
-                                        <input id="mobile" placeholder="eg: 3334709643" class="form-control r-0 light s-12 " type="text">
+                                        <input id="mobile" placeholder="eg: 3334709643" class="form-control r-0 light s-12 " type="text" >
                                     </div>
 
+                                </div>
+                                <div class="form-row mt-1">
+                                    <div class="form-group col-6 m-0">
+                                        <label for="role" class="col-form-label s-12"><i class="icon-envelope-o mr-2"></i>Primary Role</label>
+                                        <select name="role" id="role" class="form-control r-0 light s-12 ">
+                                            <option value="">Pilih Role</option>
+                                            <?php if(isset($groups)){
+                                                foreach($groups as $group){
+                                             ?>
+                                             <option value="<?= $group->id ?>"><?= $group->display_name ?></option>
+
+                                             <?php }} ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-6 m-0">
+                                        <label for="username" class="col-form-label s-12"><i class="icon-envelope-o mr-2"></i>Login Dengan</label>
+                                        <select name="username" id="username" class="form-control r-0 light s-12 ">
+                                        <option value="email">Email</option>    
+                                        <option value="phone">No HP</option>
+                                            
+                                        </select>
+                                    </div>
                                 </div>
                                 <!-- <div class="form-row">
                                     <div class="form-group col-9 m-0">
@@ -167,11 +189,13 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
 
 <script>
+    
     // flatpickr("#dob", {
     //     altFormat: "d-m-Y",
     //     altInput: true,
     //     dateFormat:  "Y-m-d"
     // });
     // $("#dob").flatpickr();
+
 </script>
 <?= $this->endSection() ?>
