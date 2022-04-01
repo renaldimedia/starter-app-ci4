@@ -7,7 +7,7 @@
                 <div class="col">
                     <h3 class="my-3">
                         <i class="icon icon-users"></i>
-                        Data User
+                        Data User Admin
                     </h3>
                 </div>
             </div>
@@ -17,30 +17,22 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card my-3 no-b">
-                    <div class="card-header white m-3">
-                        <h6>With Json Export Butto</h6>
-                    </div>
                     <div class="card-body">
-                        <table id="example-with-json-button" class="table table-bordered table-hover">
+                        <button type="button" class="btn btn-primary btn-lg r-20"><i class="icon-plus mr-2"></i>Tambah Admin</button>
+                        <hr>
+                        <table id="table" class="table table-bordered table-hover">
                             <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Status</th>
-                                <th>Jumlah POST</th>
+                                <th>Role</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -52,23 +44,43 @@
 
     <?= $this->section('footer') ?>
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script> -->
 <script>
+    var tbl;
     $(document).ready(function() {
-        $('#example-with-json-button').DataTable( {
-            dom: 'Bfrtip',
-            buttons: [
+        tbl = $('#table').DataTable( {
+            dom: 'lfrtip',
+            processing: true,
+            serverSide: true,
+            order: [], //init datatable not ordering
+            ajax: "<?= base_url('admin/users/lists') ?>",
+            columnDefs: [
                 {
-                    text: 'JSON',
-                    action: function ( e, dt, button, config ) {
-                        var data = dt.buttons.exportData();
-
-                        $.fn.dataTable.fileSave(
-                            new Blob( [ JSON.stringify( data ) ] ),
-                            'Export.json'
-                        );
+                    targets: 4,
+                    render: function(data, type, full, meta) {
+                        let res = "";
+                        if(type === 'display'){
+                            if(full[4] == 1){
+                                res += `<span class="text-success">Aktif</span>`;
+                            }else{
+                                res += `<span class="text-danger">Non-Aktif</span>`;
+                            }
+                        }
+                        return res;
+                    }
+                },
+                {
+                    targets: 6,
+                    render: function(data, type, full, meta) {
+                        let res = "";
+                        if(type === 'display'){
+                            res += `
+                                <a href='<?= base_url('admin/users/edit') ?>/${full[6]}' class="text-success">Edit</a>
+                            `;
+                        }
+                        return res;
                     }
                 }
             ]

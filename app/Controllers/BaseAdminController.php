@@ -46,11 +46,47 @@ class BaseAdminController extends Controller
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         $this->data['theme_path'] = base_url('xmsth/assets');
+        $this->data['menus'] = $this->buildmenu();
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = \Config\Services::session();
+    }
+
+    private function buildmenu($data = null)
+    {
+        return [
+            array(
+                'group_display_name' => 'Main Navigation',
+                'group_menus' =>  [
+                    array(
+                        'id' => '',
+                        'class' => '',
+                        'icon_class' => 'icon icon-account_box light-green-text s-18',
+                        'url' => '#',
+                        'display_name' => 'Users',
+                        'submenu' => [
+                            array(
+                                'id' => '',
+                                'class' => '',
+                                'icon_class' => 'icon icon-circle-o',
+                                'url' => base_url('admin/users'),
+                                'display_name' => 'Daftar User'
+                            ),
+                            array(
+                                'id' => '',
+                                'class' => '',
+                                'icon_class' => 'icon icon-add',
+                                'url' => base_url('admin/users/add'),
+                                'display_name' => 'Tambah User'
+                            )
+                        ]
+                    )
+                ]
+            )
+           
+        ];
     }
 }

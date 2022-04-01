@@ -32,15 +32,15 @@
         <div class="animated fadeInUpShort">
             <div class="row my-3">
                 <div class="col-md-12">
-                    <form action="#">
+                    <!-- <form action="" id="userform" method="post"> -->
                         <div class="card no-b  no-r">
                             <div class="card-body">
                                 <h5 class="card-title"><?= isset($subtitle) ? $subtitle : "Tambah Data User" ?></h5>
                                 <div class="form-row">
                                     <div class="col-md-12">
-                                        <div class="form-group m-0">
-                                            <label for="name" class="col-form-label s-12">NAMA</label>
-                                            <input id="name" placeholder="Enter User Name" class="form-control r-0 light s-12 " type="text" value="<?= isset($data) && $isset($data['name']) ? $data['name'] : ""  ?>">
+                                        <div class="form-group m-0 has-validation">
+                                            <label for="name" class="col-form-label s-12">NAMA*</label>
+                                            <input id="name" placeholder="Enter User Name" name="name" class="form-control r-0 light s-12 " required type="text" value="<?= isset($data) && isset($data['name']) ? $data['name'] : ""  ?>">
                                         </div>
 
                                         <!-- <div class="form-row">
@@ -80,39 +80,40 @@
                                 </div>
 
                                 <div class="form-row mt-1">
-                                    <div class="form-group col-6 m-0">
-                                        <label for="email" class="col-form-label s-12"><i class="icon-envelope-o mr-2"></i>Email</label>
-                                        <input id="email" placeholder="user@email.com" class="form-control r-0 light s-12 " type="text" >
+                                    <div class="form-group col-6 m-0 has-validation" >
+                                        <label for="email" class="col-form-label s-12"><i class="icon-envelope-o mr-2"></i>EMAIL*</label>
+                                        <input value="<?= isset($data) && isset($data['email']) ? $data['email'] : ""  ?>" id="email" required placeholder="user@email.com" class="form-control r-0 light s-12 " type="text" name="email" >
                                     </div>
 
                                     <!-- <div class="form-group col-4 m-0">
                                         <label for="phone" class="col-form-label s-12"><i class="icon-phone mr-2"></i>Phone</label>
                                         <input id="phone" placeholder="05112345678" class="form-control r-0 light s-12 " type="text">
                                     </div> -->
-                                    <div class="form-group col-6 m-0">
-                                        <label for="mobile" class="col-form-label s-12"><i class="icon-mobile-phone mr-2"></i>Mobile</label>
-                                        <input id="mobile" placeholder="eg: 3334709643" class="form-control r-0 light s-12 " type="text" >
+                                    <div class="form-group col-6 m-0 has-validation">
+                                        <label for="mobile" class="col-form-label s-12"><i class="icon-mobile-phone mr-2"></i>MOBILE</label>
+                                        <input value="<?= isset($data) && isset($data['phone']) ? $data['phone'] : ""  ?>" id="mobile" name="mobile" placeholder="eg: 3334709643" class="form-control r-0 light s-12 " type="text" >
                                     </div>
 
                                 </div>
                                 <div class="form-row mt-1">
-                                    <div class="form-group col-6 m-0">
-                                        <label for="role" class="col-form-label s-12"><i class="icon-envelope-o mr-2"></i>Primary Role</label>
-                                        <select name="role" id="role" class="form-control r-0 light s-12 ">
+                                    <div class="form-group col-6 m-0 has-validation">
+                                        <label for="role" class="col-form-label s-12"><i class="icon-envelope-o mr-2"></i>PRIMARY ROLE*</label>
+                                        <select required name="role" id="role" class="form-control r-0 light s-12 ">
                                             <option value="">Pilih Role</option>
+                                            <!-- <option value="9999" selected>asdasd</option> -->
                                             <?php if(isset($groups)){
                                                 foreach($groups as $group){
                                              ?>
-                                             <option value="<?= $group->id ?>"><?= $group->display_name ?></option>
+                                             <option value="<?= $group->id ?>" <?php if(isset($data) && isset($data['default_group']) && $data['default_group'] == $group->id){echo "selected='selected'";} ?>><?= $group->display_name ?></option>
 
                                              <?php }} ?>
                                         </select>
                                     </div>
-                                    <div class="form-group col-6 m-0">
-                                        <label for="username" class="col-form-label s-12"><i class="icon-envelope-o mr-2"></i>Login Dengan</label>
+                                    <div required class="form-group col-6 m-0 has-validation">
+                                        <label for="username" class="col-form-label s-12"><i class="icon-envelope-o mr-2"></i>LOGIN DENGAN*</label>
                                         <select name="username" id="username" class="form-control r-0 light s-12 ">
-                                        <option value="email">Email</option>    
-                                        <option value="phone">No HP</option>
+                                        <option value="email" <?php if(isset($data) && isset($data['username']) && $data['username'] == "email"){echo "selected='selected'";} ?>>Email</option>    
+                                        <option value="phone" <?php if(isset($data) && isset($data['username']) && $data['username'] == "phone"){echo "selected='selected'";} ?>>No HP</option>
                                             
                                         </select>
                                     </div>
@@ -174,10 +175,14 @@
                             </div> -->
                             <!-- <hr> -->
                             <div class="card-body">
-                                <button type="submit" class="btn btn-primary btn-lg"><i class="icon-save mr-2"></i><?= isset($buttons) && isset($buttons['submit_text']) ? $buttons['submit_text'] : "Simpan Datas" ?></button>
+                                <button onclick="save()" class="btn btn-primary btn-lg"><i class="icon-save mr-2"></i><?= isset($buttons) && isset($buttons['submit_text']) ? $buttons['submit_text'] : "Simpan Datas" ?></button>
+                                <!-- <div > -->
+                                                    <span class="border border-danger d-none" id="errorcontainer">asdasd</span>
+                                <!-- </div> -->
+                                <!-- <input type="submit" value=""> -->
                             </div>
                         </div>
-                    </form>
+                    <!-- </form> -->
                 </div>
             </div>
     </div>
@@ -189,13 +194,56 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
 
 <script>
-    
+    // set
     // flatpickr("#dob", {
     //     altFormat: "d-m-Y",
     //     altInput: true,
     //     dateFormat:  "Y-m-d"
     // });
     // $("#dob").flatpickr();
+    function save() {
+        let urls = "<?= $submit_url ?>";
+        $.post(urls, {
+                name: $('#name').val(),
+                role: $('#role').val(),
+                email: $('#email').val(),
+                mobile: $('#mobile').val(),
+                username: $('#username').val()
+            }).done(function(res){
+                // console.log(res);
+                
+                if(res.error == 1){
+                    toastr.error(res.message)
+                }else if(res.error == 0){
+                    toastr.success(res.message);
+                    $('#loader').removeClass('loader-fade');
+                    setTimeout(() => {
+                        window.location.replace = `${res.redirect}`;
+                    }, 1500);
+                }
+            }).fail(function(e){
+                console.log(e);
+                if(e.responseJSON.error == 400){
+                    let errorlist = JSON.parse(e.responseJSON.messages.error);
+                    let msgs = ``;
+                    for (const [key, value] of Object.entries(errorlist)) {
+                        msgs += `<p style="color:red;">${value}</p>`
+                    }
+                    // console.log(errorlist)
+                    $('#errorcontainer').removeClass('d-none');
+                    document.querySelector('#errorcontainer').innerHTML = msgs;
+                }
+            });
+        // $.ajax({
+        //     type: "POST",
+        //     url: url,
+        //     data: ,
+        //     success: function(res){
+        //         toastr('Success');
+        //     }
+        //     dataType: dataType
+        // });
+    }
 
 </script>
 <?= $this->endSection() ?>

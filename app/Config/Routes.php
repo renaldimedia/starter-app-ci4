@@ -37,8 +37,11 @@ $routes->group('admin', function ($routes) {
     $routes->get('admins', 'Admins::index');
     $routes->group('users', function ($routes) {
         $routes->get('', 'Users::index');
+        $routes->get('lists', 'Users::lists');
         $routes->get('add', 'Users::form');
-        $routes->get('edit', 'Users::form');
+        $routes->post('add', 'Users::save');
+        $routes->post('update', 'Users::save/update');
+        $routes->get('edit/(:num)', 'Users::form/$1');
     });
 });
 
